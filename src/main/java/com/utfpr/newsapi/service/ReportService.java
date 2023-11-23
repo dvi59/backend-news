@@ -28,15 +28,10 @@ public class ReportService {
         return reportRepository.latestMews();
     }
 
-    public Report addNews(Report report){
-        HttpSession session = request.getSession();
-        Long loggedInUserId = (Long) session.getAttribute("loggedInUserId");
-
+    public Report addNews(Report report, Long loggedInUserId){
         User author = userRepository.findRef(loggedInUserId);
         report.setPublicationDate(new Date());
         report.setUser(author);
-
-
         return reportRepository.save(report);
     }
 

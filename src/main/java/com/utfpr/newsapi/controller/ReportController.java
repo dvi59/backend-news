@@ -29,7 +29,10 @@ public class ReportController {
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Report addNews(@RequestBody Report report){
-        return reportService.addNews(report);
+        HttpSession session = request.getSession();
+        Long loggedInUserId = (Long) session.getAttribute("loggedInUserId");
+        return reportService.addNews(report,loggedInUserId );
+
     }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
