@@ -1,17 +1,16 @@
 package com.utfpr.newsapi.service;
 
+import com.utfpr.newsapi.dto.PublishReportDTO;
 import com.utfpr.newsapi.entity.Report;
-import com.utfpr.newsapi.entity.User;
+import com.utfpr.newsapi.infra.security.TokenService;
 import com.utfpr.newsapi.repository.ReportRepository;
 import com.utfpr.newsapi.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReportService {
@@ -22,16 +21,20 @@ public class ReportService {
     private UserRepository userRepository;
 
     @Autowired
-    private HttpServletRequest request;
+    private TokenService tokenService;
 
     public List<Report> latestNews(){
         return reportRepository.latestMews();
     }
 
-    public Report addNews(Report report, Long loggedInUserId){
-        User author = userRepository.findRef(loggedInUserId);
-        report.setPublicationDate(new Date());
-        report.setUser(author);
+    public Report addNews(PublishReportDTO reportDTO) throws UnsupportedEncodingException {
+        Report report = new Report(
+                new Date(),
+                reportDTO.title(),
+                reportDTO.subTitle(),
+                reportDTO.body(),
+                this.userRepository.findByEmail(reportDTO.email())
+        );
         return reportRepository.save(report);
     }
 

@@ -2,26 +2,18 @@ package com.utfpr.newsapi.service;
 
 import com.utfpr.newsapi.entity.User;
 import com.utfpr.newsapi.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
-
+public class UserService  {
     @Autowired
     private  UserRepository userRepository;
-
+    /*
     @Autowired
     private  PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private HttpServletRequest request;
-
-
-    public User userRegister(User user) {
+     public User userRegister(User user) {
         // Você pode adicionar lógica de validação ou outros processamentos antes de salvar
         user.setPassword(encryptPass(user.getPassword()));
         return userRepository.save(user);
@@ -39,5 +31,8 @@ public class UserService {
         }
         return null;
     }
+*/
+
+
 
 }

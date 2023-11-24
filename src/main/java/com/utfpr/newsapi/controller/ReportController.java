@@ -1,13 +1,16 @@
 package com.utfpr.newsapi.controller;
 
+import com.utfpr.newsapi.dto.PublishReportDTO;
 import com.utfpr.newsapi.entity.Report;
 import com.utfpr.newsapi.service.ReportService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -17,8 +20,6 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @Autowired
-    private HttpServletRequest request;
 
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -28,17 +29,17 @@ public class ReportController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Report addNews(@RequestBody Report report){
-        HttpSession session = request.getSession();
-        Long loggedInUserId = (Long) session.getAttribute("loggedInUserId");
-        return reportService.addNews(report,loggedInUserId );
+    public ResponseEntity addNews(@RequestBody PublishReportDTO report) throws UnsupportedEncodingException {
+        var token = "bananw";
+
+        this.reportService.addNews(report);
+
+        return ResponseEntity.ok().build();
 
     }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Report showNews(@PathVariable("id")Long id){
-        HttpSession session = request.getSession();
-        session.setAttribute("reportId",id);
-        return reportService.showNews(id);
+             return reportService.showNews(id);
     }
 }

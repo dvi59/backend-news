@@ -19,7 +19,7 @@ public class UserController {
 
     @Autowired
     private HttpServletRequest request;
-
+    /*
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public User register(@RequestBody User user)
@@ -36,5 +36,5 @@ public class UserController {
         User loggedInUser = userService.loginUser(email,password);
         session.setAttribute("loggedInUserId", loggedInUser.getId());
         return loggedInUser;
-    }
+    }*/
 }

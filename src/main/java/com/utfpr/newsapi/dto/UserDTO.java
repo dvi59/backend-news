@@ -1,9 +1,7 @@
 package com.utfpr.newsapi.dto;
 
+import com.utfpr.newsapi.entity.UserRole;
 import lombok.*;
-@Data
-@Getter
-@Setter
-public class UserDTO {
+public record UserDTO(String email, String name, String password, UserRole role){
 
 }

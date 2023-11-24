@@ -28,4 +28,14 @@ public class Report implements Serializable {
     @ManyToOne
     @JoinColumn(name = "author", nullable = false)
     private User user;
+
+    public Report(Date publicationDate, String title, String subTitle, String body, User user){
+        this.publicationDate = publicationDate;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.body = body;
+        this.user = user;
+    }
+
+
 }
