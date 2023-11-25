@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.util.Arrays;
@@ -56,13 +57,20 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://example.com"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // Permitir solicitações de qualquer origem
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+
+        // Permitir métodos GET e POST
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+
         source.registerCorsConfiguration("/**", configuration);
-        return source;
+
+        return new CorsFilter(source);
     }
 }
