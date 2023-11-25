@@ -12,8 +12,7 @@ import java.util.List;
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
     @Query("select r from Report r order by r.publicationDate desc ")
-    List<Report>
-    latestMews();
+    List<Report>latestMews();
 
     @Query("select r from Report r where r.id =:id")
     Report findRef(@Param("id") Long id);
