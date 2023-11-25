@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-public class Comentary {
+public class Commentary {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,4 +28,12 @@ public class Comentary {
 
     private Date publicationDate;
 
+    public Commentary(User user, String info, Report report, Date publicationDate){
+        this.user = user;
+        this.info = info;
+        this.report = report;
+        this.publicationDate = publicationDate;
+    }
+
+    public Commentary() {}
 }

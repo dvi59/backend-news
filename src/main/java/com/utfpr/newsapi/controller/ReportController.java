@@ -2,6 +2,8 @@ package com.utfpr.newsapi.controller;
 
 import com.utfpr.newsapi.dto.PublishReportDTO;
 import com.utfpr.newsapi.entity.Report;
+import com.utfpr.newsapi.infra.security.SecurityFilter;
+import com.utfpr.newsapi.infra.security.TokenService;
 import com.utfpr.newsapi.service.ReportService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +22,8 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
+    @Autowired
+    private TokenService tokenService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -29,13 +33,12 @@ public class ReportController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity addNews(@RequestBody PublishReportDTO report) throws UnsupportedEncodingException {
-        var token = "bananw";
 
-        this.reportService.addNews(report);
-
+    public ResponseEntity addNews(@RequestBody PublishReportDTO report, HttpServletRequest request) throws UnsupportedEncodingException {
+        var authHeader = request.getHeader("Authorization").replace("Bearer ", "");
+        var user = this.tokenService.validateToken(authHeader);
+        this.reportService.addNews(report,user);
         return ResponseEntity.ok().build();
-
     }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

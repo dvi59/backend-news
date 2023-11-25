@@ -37,5 +37,7 @@ public class Report implements Serializable {
         this.user = user;
     }
 
+    public Report(){}
+
 
 }

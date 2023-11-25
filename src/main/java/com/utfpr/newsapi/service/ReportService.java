@@ -27,13 +27,13 @@ public class ReportService {
         return reportRepository.latestMews();
     }
 
-    public Report addNews(PublishReportDTO reportDTO) throws UnsupportedEncodingException {
+    public Report addNews(PublishReportDTO reportDTO,String email) {
         Report report = new Report(
                 new Date(),
                 reportDTO.title(),
                 reportDTO.subTitle(),
                 reportDTO.body(),
-                this.userRepository.findByEmail(reportDTO.email())
+                this.userRepository.findByEmail(email)
         );
         return reportRepository.save(report);
     }
