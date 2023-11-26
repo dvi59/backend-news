@@ -47,6 +47,6 @@ public class AuthController {
 
         this.userRepository.save(newUser);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("USUARIO CADASTRADO");
     }
 }

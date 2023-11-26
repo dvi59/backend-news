@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("news")
 public class ReportController {
@@ -25,21 +26,23 @@ public class ReportController {
     @Autowired
     private TokenService tokenService;
 
+    @CrossOrigin
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Report> getNews(){
         return reportService.latestNews();
     };
 
+    @CrossOrigin
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-
     public ResponseEntity addNews(@RequestBody PublishReportDTO report, HttpServletRequest request) throws UnsupportedEncodingException {
         var authHeader = request.getHeader("Authorization").replace("Bearer ", "");
         var user = this.tokenService.validateToken(authHeader);
         this.reportService.addNews(report,user);
         return ResponseEntity.ok().build();
     }
+    @CrossOrigin
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Report showNews(@PathVariable("id")Long id){

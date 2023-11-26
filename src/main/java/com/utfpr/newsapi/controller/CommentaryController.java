@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("commentary")
 public class CommentaryController {
@@ -22,6 +23,7 @@ public class CommentaryController {
     @Autowired
     private CommentaryService commentaryService;
 
+    @CrossOrigin
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity addCommentary(@RequestBody CommentaryDTO commentaryDTO,@PathVariable("id")Long  reportId, HttpServletRequest request){
@@ -32,6 +34,7 @@ public class CommentaryController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Commentary> getCommentary(@PathVariable("id")Long id){return commentaryService.listComentary(id);}
