@@ -12,11 +12,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("auth")
 public class AuthController {
@@ -30,6 +28,7 @@ public class AuthController {
     private TokenService tokenService;
 
 
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Validated AuthDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
@@ -39,6 +38,7 @@ public class AuthController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
+    @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Validated UserDTO data){
         if(this.userRepository.findByLogin(data.email()) != null) return ResponseEntity.badRequest().build();
@@ -49,5 +49,4 @@ public class AuthController {
 
         return ResponseEntity.ok().build();
     }
-
 }
